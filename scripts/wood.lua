@@ -37,7 +37,7 @@ function doit()
 				srClickMouseNoMove(add_wood[0]+5, add_wood[1]+5);
 				lsSleep(500);
 				-- click Max
-				srClickMouseNoMove(xyWindowSize[0]/2, xyWindowSize[1]/2 + 55);
+				srClickMouseNoMove(xyWindowSize[0]/2, xyWindowSize[1]/2);
 			else
 				statusScreen("No add wood button, refreshing bonfire");
 				-- refresh bonfire window
