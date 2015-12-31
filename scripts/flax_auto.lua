@@ -40,7 +40,8 @@ grid_deltas =
   { {1, 0, -1, 0}, {0, 1, 0, -1} },
   { {-1, 0, 1, 0}, {0, 1, 0, -1} }
 };
-  
+
+seedType = "Old";  
 min_seeds = 0;
 is_plant = true;
 seeds_per_pass = 4;
@@ -209,7 +210,7 @@ end
 -------------------------------------------------------------------------------
 
 function promptFlaxNumbers()
-  scale = 1.1;
+  scale = 1.2;
     
   local z = 0;
   local is_done = nil;
@@ -222,6 +223,12 @@ function promptFlaxNumbers()
     local y = 5;
 
     lsSetCamera(0,0,lsScreenX*scale,lsScreenY*scale);
+
+
+    lsPrint(5, y, z, scale, scale, 0xFFFFFFff, "Flax Name:");
+    is_done, seedType = lsEditBox("flaxname", 120, y, z, 100, 30, scale, scale,
+                                   0x000000ff, seedType);
+    y = y + 32
 
     lsPrint(5, y, z, scale, scale, 0xFFFFFFff, "Passes:");
     num_loops = readSetting("num_loops",num_loops);
@@ -433,11 +440,10 @@ end
 -------------------------------------------------------------------------------
 
 lastPlantPos = null;
-seedImage = imgFlax1;
 
 function getPlantWindowPos()
   srReadScreen();
-  local plantPos = findText(seedImage);
+  local plantPos = findText(seedType);
   if plantPos then
     plantPos[0] = plantPos[0] + 10;
   else
@@ -536,8 +542,8 @@ function doit()
   end
 
   getPlantWindowPos();
-  prepareOptions();
-  prepareCamera();
+  --prepareOptions();
+  --prepareCamera();
   
   drawWater();
   local beds_per_loop = grid_w*grid_h;
@@ -1173,7 +1179,7 @@ end
 -------------------------------------------------------------------------------
 
 function clickMax()
-  local pos = srFindImage("crem-max.png", 1000);
+  local pos = srFindImage("maxButton2.png", 1000);
   if pos then
     safeClick(pos[0]+5, pos[1]+5);
     return true;
@@ -1201,15 +1207,15 @@ function prepareCamera()
     local pos = findText("Options...");
     if(pos) then
         offsetClick(pos,8);
-	  lsSleep(100);
+	  lsSleep(5000);
         pos = findText("Camera");
         if(pos) then
             offsetClick(pos,8);
-	      lsSleep(100);
+	      lsSleep(5000);
             pos = findText("Cartographer's Cam");
             if(pos) then
                 offsetClick(pos,8);
-		   lsSleep(100);
+		   lsSleep(5000);
                 pos = srFindImage("ok-faint.png");
                 if(pos) then
                     offsetClick(pos);
@@ -1343,5 +1349,3 @@ function closeAllFlaxWindows()
   end
   safeClick(width/2-45,height/2-45);
 end
-
-
